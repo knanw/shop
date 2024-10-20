@@ -1,0 +1,13 @@
+.v-sheet {
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.v-toolbar-title {
+    color: #1976D2
+}
+
+.loading-indicator {
+    z-index: 1050;
+    position: relative;
+}
