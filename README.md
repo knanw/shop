@@ -1,12 +1,16 @@
 # Anleitung
 
+![img.png](img.png)
+
+
+
 ## Docker Container für Datenbank erstellen:
 
 - Container Name: demo-mssql
 - Persistence-Volume Name: demo-mssql-data
 - Passwort: webshop_password0
 
-# Persistence Volume erstellen:
+## Persistence Volume erstellen:
 ```shell script
 docker volume create demo-mssql-data
 ```
@@ -21,7 +25,7 @@ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=webshop_password0' -p 1433:1433 --
 docker ps
 docker ps -a
 ```
-## Falls Container nicht richtig läuft 
+## Falls Container nicht richtig läuft:
 - stoppen und löschen:
     ```shell script
     docker stop demo-mssql
@@ -34,13 +38,13 @@ docker ps -a
 docker exec -it demo-mssql /opt/mssql-tools18/bin/sqlcmd -S tcp:localhost,1433 -U sa -P webshop_password0 -Q "CREATE DATABASE shop;" -C
 ```
 
-# Backend starten  ([siehe](./shop-backend/README.md))
+## Backend starten  ([siehe](./shop-backend/README.md)):
 ```shell script
 cd shop/shop-backend
 ./mvnw quarkus:dev
 ```
 
-# Frontend starten ([siehe](./shop-frontend/README.md))
+## Frontend starten ([siehe](./shop-frontend/README.md)):
 ```shell script
 cd shop/shop-frontend
 ```
@@ -53,7 +57,7 @@ yarn
 yarn dev
 ```
 
-# Skripte ausführen 
+## Skripte ausführen:
 (Demodaten in Datenbank erzeugen, alternativ im Frontend manuell erfassen)
 - unter Linux:
 ```shell script
@@ -67,7 +71,7 @@ cd shop/scripts
 .\scripts\create_books.ps1
 ```
 
-# Frontend in Web-Browser:
+## Frontend in Web-Browser:
 http://localhost:3000
 
 # Backend in Browser erreichbar:
