@@ -15,9 +15,10 @@ import org.mockito.Mockito;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @QuarkusTest
-public class ShoppingCarResourceTest {
+public class ShoppingCartResourceTest {
 
     @Inject
     ShoppingCartResource shoppingCartResource;
@@ -30,19 +31,16 @@ public class ShoppingCarResourceTest {
     }
 
     @Test
-    public void testCalculateOptimalPrice_NoBooks() {
-        List<Book> basket = Collections.emptyList();
-        Response response = shoppingCartResource.calculateOptimalPrice(basket);
-
+    void testCalculateOptimalPrice_emptyBasket() {
+        Response response = shoppingCartResource.calculateOptimalPrice(Collections.emptyList());
         assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
     }
 
     @Test
-    public void testCalculateBasketPrice_NoBooks() {
-        List<Book> books = Collections.emptyList();
-        double price = ShoppingCartResource.calculateBasketPrice(books);
-
-        assertEquals(0.0, price);
+    public void testCalculateOptimalPrice_NullBooks() {
+        List<Book> basket = Collections.emptyList();
+        Response response = shoppingCartResource.calculateOptimalPrice(null);
+        assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
     }
 
     @Test
@@ -59,6 +57,25 @@ public class ShoppingCarResourceTest {
         double price = ShoppingCartResource.calculateMinimumPrice(books, 0.0);
 
         assertEquals(8.0, price);
+    }
+
+    @Test
+    void testCalculateOptimalPrice_nonEmptyBasket() {
+        Book book1 = new Book();
+        book1.setId(1L);
+        book1.setTitle("Book 1");
+
+        Book book2 = new Book();
+        book2.setId(2L);
+        book2.setTitle("Book 2");
+
+        Series series = new Series();
+        series.setBooks(Arrays.asList(book1, book2));
+
+        when(seriesRepository.listAll()).thenReturn(Collections.singletonList(series));
+
+        Response response = shoppingCartResource.calculateOptimalPrice(Arrays.asList(book1, book2));
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 
     @Test
