@@ -34,12 +34,9 @@
 <script setup lang="ts">
 import {computed, onMounted, reactive, ref} from 'vue'
 import {useBookStore} from "@/stores/common"
-import {useRouter} from "vue-router"
 import type {BookDTO} from "@/types";
 
-const router = useRouter()
 const store = useBookStore()
-
 const items = computed(() => store.gets)
 
 const emptyBookDTO = (): BookDTO => ({
@@ -55,8 +52,6 @@ const emptyBookDTO = (): BookDTO => ({
 let selectedItem = reactive(emptyBookDTO());
 let loading = ref(true)
 loading.value = true
-const search = ref('')
-const selectedRowId = ref()
 let dialog = ref(false)
 
 let cart = []

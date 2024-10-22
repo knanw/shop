@@ -35,13 +35,10 @@
 <script setup lang="ts">
 import {computed, onMounted, reactive, ref} from 'vue'
 import {useSeriesStore} from "@/stores/common"
-import {useRouter} from "vue-router"
-import type {BookDTO, SeriesDTO} from "@/types";
+import type {SeriesDTO} from "@/types";
 import Series from "~/components/Series.vue";
 
-const router = useRouter()
 const store = useSeriesStore()
-
 const items = computed(() => store.gets)
 
 const emptySeriesDTO = (): SeriesDTO => ({
@@ -55,8 +52,6 @@ const emptySeriesDTO = (): SeriesDTO => ({
 let selectedItem = reactive(emptySeriesDTO());
 let loading = ref(true)
 loading.value = true
-const search = ref('')
-const selectedRowId = ref()
 let dialog = ref(false)
 
 onMounted(async () => {
@@ -72,10 +67,6 @@ async function fetchData() {
   }
 }
 
-function resetSelectedRow() {
-  selectedRowId.value = null
-}
-
 const headers = ref([
   {title: 'Id', key: 'id'},
   {title: 'Name', key: 'name'},
@@ -87,10 +78,6 @@ const headers = ref([
 function createDialog() {
   selectedItem = null
   dialog.value = true;
-}
-
-function resetSearch() {
-  search.value = ''
 }
 
 function reset() {
