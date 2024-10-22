@@ -52,6 +52,14 @@ cd shop/shop-frontend
 ```shell script
 yarn
 ```
+
+- falls mit `yarn` nicht alle Abhängigkeiten installiert werden können muss die eine andere node version verwendet werden:
+```shell script
+nvm install 22.0.0
+nvm use 22.0.0
+```
+nvm kann von der offiziellen Webseite installiert werden: https://github.com/nvm-sh/nvm
+
 - starten:
 ```shell script
 yarn dev

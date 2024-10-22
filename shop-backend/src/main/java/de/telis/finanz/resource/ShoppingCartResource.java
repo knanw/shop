@@ -36,13 +36,15 @@ public class ShoppingCartResource {
 
         Map<Series, List<Book>> sortedBasket = getBooksBySeries(basket);
 
-
-
         double totalPrice = 0.0;
 
         for (Map.Entry<Series, List<Book>> entry : sortedBasket.entrySet()) {
-            totalPrice += calculateBasketPrice(entry.getValue());
+            if(entry.getKey() != null) {
+                totalPrice += calculateBasketPrice(entry.getValue());
+            }
         }
+
+        totalPrice += sortedBasket.get(null).size() * 8;
 
         return Response.ok(String.format("Der Gesamtpreis des Warenkorbs beträgt: %.2f EUR%n", totalPrice)).build();
     }
